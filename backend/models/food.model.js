@@ -7,12 +7,12 @@ const foodSchema = new mongoose.Schema(
       required: true,
     },
     amount: {
-      type: Number,
+      type: String,
       required: true,
       default: 0,
     },
     calorie: {
-      type: Number,
+      type: Number,   
       required: true,
       default: 0,
     },
