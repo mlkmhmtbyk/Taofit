@@ -12,7 +12,7 @@ const foodSchema = new mongoose.Schema(
       default: 0,
     },
     calorie: {
-      type: Number,   
+      type: Number,
       required: true,
       default: 0,
     },
@@ -30,6 +30,11 @@ const foodSchema = new mongoose.Schema(
       type: Number,
       required: true,
       default: 0,
+    },
+    mealId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Meal",
+      required: true,
     },
   },
   { timestamps: true }
