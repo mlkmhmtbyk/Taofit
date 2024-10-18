@@ -11,7 +11,8 @@ export const createFood = async (req, res) => {
     !food.calorie ||
     !food.fat ||
     !food.protein ||
-    !food.carbo
+    !food.carbo ||
+    !food.mealId
   ) {
     return res
       .status(400)
