@@ -7,7 +7,14 @@ import { Box } from "@mui/material";
 export default function ResponsiveDateCalendar() {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Box sx={{ width: "100%", maxWidth: 300, margin: "0 auto", display: { xs: "none", md: "flex" }  }}>
+      <Box
+        sx={{
+          width: "100%",
+          maxWidth: 300,
+          margin: "0 auto",
+          display: { sm: "none", md: "flex" },
+        }}
+      >
         <DateCalendar />
       </Box>
     </LocalizationProvider>

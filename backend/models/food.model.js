@@ -31,6 +31,7 @@ const foodSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
+    
     mealId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Meal",

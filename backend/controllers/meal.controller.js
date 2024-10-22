@@ -1,4 +1,5 @@
 import Meal from "../models/meal.model.js";
+import Food from "../models/food.model.js";
 import mongoose from "mongoose";
 
 export const createMeal = async (req, res) => {
@@ -24,7 +25,15 @@ export const createMeal = async (req, res) => {
 export const getMeals = async (req, res) => {
   try {
     const meals = await Meal.find();
-    res.status(200).json({ success: true, data: meals });
+    const mealsWithFoods = await Promise.all(
+      meals.map(async (meal) => {
+        const foods = await Food.find({ mealId: meal._id });
+        meal.foods = foods;
+        return meal;
+      })
+    );
+
+    res.status(200).json({ success: true, data: mealsWithFoods });
   } catch (error) {
     console.log(error);
     res.status(400).json({ success: false, message: "Server error" });
@@ -34,6 +43,10 @@ export const getMeals = async (req, res) => {
 export const getMealById = async (req, res) => {
   try {
     const meal = await Meal.findById(req.params.id);
+    const foods = await Food.find({ mealId: req.params.id });
+
+    meal.foods = foods;
+
     res.status(200).json({ success: true, data: meal });
   } catch (error) {
     console.log(error);
