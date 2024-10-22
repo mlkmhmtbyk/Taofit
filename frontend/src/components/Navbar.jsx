@@ -140,7 +140,7 @@ function ResponsiveAppBar() {
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: "white", display: "block" }}
             >
-              Exersizes
+              Exercises
             </Button>
             <Button
               onClick={handleCloseNavMenu}
