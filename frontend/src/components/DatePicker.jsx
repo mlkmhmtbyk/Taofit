@@ -14,6 +14,8 @@ export default function CustomMonthLayout() {
       <DateCalendar
         sx={{
           display: { xs: "none", lg: "block" },
+          height: "%50",
+          width: "100%",
         }}
       />
       <DatePicker
@@ -23,7 +25,7 @@ export default function CustomMonthLayout() {
           
           display: { xs: "block", lg: "none" },
           textAlign: "center",
-          margin: "0 auto",
+          margin: "0px auto",
           width: 150,
         }}
         value={value}
