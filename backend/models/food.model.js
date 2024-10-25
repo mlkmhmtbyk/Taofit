@@ -11,7 +11,7 @@ const foodSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
-    calorie: {
+    calories: {
       type: Number,
       required: true,
       default: 0,
@@ -26,12 +26,12 @@ const foodSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
-    carbo: {
+    carbs: {
       type: Number,
       required: true,
       default: 0,
     },
-    
+
     mealId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Meal",

@@ -1,93 +1,100 @@
-import React from "react";
+import React, { useEffect } from "react";
 import DatePicker from "../components/DatePicker.jsx";
 import Grid from "@mui/material/Grid2";
 import Box from "@mui/material/Box";
 import MealTable from "../components/MealTable.jsx";
 import Progressbar from "../components/Progressbar.jsx";
 import PieChart from "../components/PieChart.jsx";
+import { useMealStore } from "../store/meal.js";
 
-const meals = [
-  {
-    id: "123",
-    name: "Breakfast",
-    date: "2022-04-17",
-    foods: [
-      {
-        id: "123",
-        name: "Apple",
-        calories: 262,
-        fat: 16.0,
-        carbs: 24,
-        protein: 6.0,
-      },
-      {
-        id: "123",
-        name: "Banana",
-        calories: 262,
-        fat: 16.0,
-        carbs: 24,
-        protein: 6.0,
-      },
-      {
-        id: "123",
-        name: "Egg",
-        calories: 262,
-        fat: 16.0,
-        carbs: 24,
-        protein: 6.0,
-      },
-      {
-        id: "123",
-        name: "Cheese",
-        calories: 262,
-        fat: 16.0,
-        carbs: 24,
-        protein: 6.0,
-      },
-    ],
-  },
-  {
-    id: "123",
-    name: "Lunch",
-    date: "2022-04-17",
-    foods: [
-      {
-        id: "123",
-        name: "Apple",
-        calories: 262,
-        fat: 16.0,
-        carbs: 24,
-        protein: 6.0,
-      },
-      {
-        id: "123",
-        name: "Banana",
-        calories: 262,
-        fat: 16.0,
-        carbs: 24,
-        protein: 6.0,
-      },
-      {
-        id: "123",
-        name: "Orange",
-        calories: 262,
-        fat: 16.0,
-        carbs: 24,
-        protein: 6.0,
-      },
-      {
-        id: "123",
-        name: "Cheese",
-        calories: 262,
-        fat: 16.0,
-        carbs: 24,
-        protein: 6.0,
-      },
-    ],
-  },
-];
+// const meals = [
+//   {
+//     id: "123",
+//     name: "Breakfast",
+//     date: "2022-04-17",
+//     foods: [
+//       {
+//         id: "123",
+//         name: "Apple",
+//         calories: 262,
+//         fat: 16.0,
+//         carbs: 24,
+//         protein: 6.0,
+//       },
+//       {
+//         id: "123",
+//         name: "Banana",
+//         calories: 262,
+//         fat: 16.0,
+//         carbs: 24,
+//         protein: 6.0,
+//       },
+//       {
+//         id: "123",
+//         name: "Egg",
+//         calories: 262,
+//         fat: 16.0,
+//         carbs: 24,
+//         protein: 6.0,
+//       },
+//       {
+//         id: "123",
+//         name: "Cheese",
+//         calories: 262,
+//         fat: 16.0,
+//         carbs: 24,
+//         protein: 6.0,
+//       },
+//     ],
+//   },
+//   {
+//     id: "123",
+//     name: "Lunch",
+//     date: "2022-04-17",
+//     foods: [
+//       {
+//         id: "123",
+//         name: "Apple",
+//         calories: 262,
+//         fat: 16.0,
+//         carbs: 24,
+//         protein: 6.0,
+//       },
+//       {
+//         id: "123",
+//         name: "Banana",
+//         calories: 262,
+//         fat: 16.0,
+//         carbs: 24,
+//         protein: 6.0,
+//       },
+//       {
+//         id: "123",
+//         name: "Orange",
+//         calories: 262,
+//         fat: 16.0,
+//         carbs: 24,
+//         protein: 6.0,
+//       },
+//       {
+//         id: "123",
+//         name: "Cheese",
+//         calories: 262,
+//         fat: 16.0,
+//         carbs: 24,
+//         protein: 6.0,
+//       },
+//     ],
+//   },
+// ];
 
 const MyDay = () => {
+  const { fetchMeals, meals } = useMealStore();
+
+  useEffect(() => {
+    fetchMeals();
+  }, [fetchMeals]);
+
   return (
     <Box>
       <Grid container spacing={4} sx={{ width: "100%" }}>
