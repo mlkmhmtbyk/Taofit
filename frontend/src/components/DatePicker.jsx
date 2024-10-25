@@ -7,7 +7,7 @@ import { useState } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
 export default function CustomMonthLayout() {
-  const [value, setValue] = React.useState(dayjs("2022-04-17"));
+  const [value, setValue] = useState(dayjs("2022-04-17"));
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
