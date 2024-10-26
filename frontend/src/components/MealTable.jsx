@@ -17,8 +17,13 @@ export default function BasicTable({ meal }) {
         <TableHead>
           <TableRow>
             <TableCell sx={{ fontWeight: "bold", maxWidth: "50px" }}>
-              {"09:00 - "}
-              {meal.name}{" "}
+              {meal.name}
+              {" - "}
+              {new Date(meal.date).toLocaleTimeString("en-US", {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false,
+              })}
             </TableCell>
             <TableCell sx={{ fontWeight: "bold" }} align="right">
               Calories
