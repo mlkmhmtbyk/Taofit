@@ -5,9 +5,18 @@ import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import dayjs from "dayjs";
 import { useState } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { useDateStore } from "../store/date.js";
 
 export default function CustomMonthLayout() {
-  const [value, setValue] = useState(dayjs("2022-04-17"));
+  const {date, setDate} = useDateStore();
+  const [value, setValue] =useState(date);
+
+  const handleDateChange = (newValue) => {
+    setDate(newValue);
+    setValue(newValue);
+  };
+
+  console.log(date);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -17,6 +26,7 @@ export default function CustomMonthLayout() {
           height: "%50",
           width: "100%",
         }}
+        value={dayjs(value)} onChange={handleDateChange}
       />
       <DatePicker
         justifyContent="center"
@@ -28,8 +38,6 @@ export default function CustomMonthLayout() {
           margin: "0px auto",
           width: 150,
         }}
-        value={value}
-        onChange={(newValue) => setValue(newValue)}
       />
     </LocalizationProvider>
   );

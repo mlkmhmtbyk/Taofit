@@ -40,6 +40,27 @@ export const getMeals = async (req, res) => {
   }
 };
 
+export const getMealsByDate = async (req, res) => {
+  const date = req.query.date;
+  console.log(date);
+
+  const startDate = new Date(date);
+  startDate.setHours(0, 0, 0, 0);
+
+  const endDate = new Date(date);
+  endDate.setHours(23, 59, 59, 999);
+
+  try {
+    const meals = await Meal.find({ date: 
+      { $gte: startDate, $lte: endDate }
+     });
+    res.status(200).json({ success: true, data: meals });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ success: false, message: "Server error" });
+  }
+};
+
 export const getMealById = async (req, res) => {
   try {
     const meal = await Meal.findById(req.params.id);

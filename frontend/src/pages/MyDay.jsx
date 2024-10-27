@@ -34,7 +34,7 @@ const MyDay = () => {
         <Grid size={{ xs: 9, lg: 6 }}>
           <Progressbar meals={meals} />
           {meals.map((meal) => (
-            <MealTable key={meal.id} meal={meal} />
+            <MealTable key={meal._id} meal={meal} />
           ))}
         </Grid>
         <Grid size={{ xs: 1.5, lg: 3 }}>

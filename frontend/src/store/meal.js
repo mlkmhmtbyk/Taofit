@@ -10,5 +10,9 @@ export const useMealStore = create(
       const data = await res.json();
       set({ meals: data.data });
     },
-  }))
+  }),
+    {
+      name: "meal-store",
+    }
+  )
 );
