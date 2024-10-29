@@ -26,6 +26,9 @@ export default function BasicTable({ meal }) {
               })}
             </TableCell>
             <TableCell sx={{ fontWeight: "bold" }} align="right">
+              Amount
+            </TableCell>
+            <TableCell sx={{ fontWeight: "bold" }} align="right">
               Calories
             </TableCell>
             <TableCell sx={{ fontWeight: "bold" }} align="right">
@@ -48,10 +51,11 @@ export default function BasicTable({ meal }) {
               <TableCell component="th" scope="row">
                 {food.name}
               </TableCell>
+              <TableCell align="right">{food.amount}</TableCell>
               <TableCell align="right">{food.calories}</TableCell>
               <TableCell align="right">{food.fat}</TableCell>
               <TableCell align="right">{food.carbs}</TableCell>
-              <TableCell align="right">{food.protein}</TableCell>
+              <TableCell align="right">{food.protein}</TableCell> 
             </TableRow>
           ))}
         </TableBody>
