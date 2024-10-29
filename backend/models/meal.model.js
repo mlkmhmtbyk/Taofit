@@ -9,11 +9,12 @@ const mealsSchema = new mongoose.Schema(
     date: {
       type: Date,
       required: true,
-      default: Date.now(),
-    }, //mongoose regex kullanarak saati ayrı bir string tutabiliriz: match: /^([01][0-9]|2[0-3]):[0-5][0-9]$/
-    foods: [
-      
-    ],
+    },
+    time: {
+      type: String,
+      required: true,
+    },
+    foods: [],
   },
   {
     timestamps: true,

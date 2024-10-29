@@ -6,13 +6,15 @@ import MealTable from "../components/MealTable.jsx";
 import Progressbar from "../components/Progressbar.jsx";
 import PieChart from "../components/PieChart.jsx";
 import { useMealStore } from "../store/meal.js";
+import { useDateStore } from "../store/date.js";
 
 const MyDay = () => {
   const { fetchMeals, meals } = useMealStore();
+  const { date } = useDateStore();
 
   useEffect(() => {
-    fetchMeals();
-  }, [fetchMeals]);
+    fetchMeals(date);
+  }, [date, fetchMeals]);
 
   return (
     <Box>

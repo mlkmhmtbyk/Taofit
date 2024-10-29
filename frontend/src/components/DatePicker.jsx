@@ -8,8 +8,8 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useDateStore } from "../store/date.js";
 
 export default function CustomMonthLayout() {
-  const {date, setDate} = useDateStore();
-  const [value, setValue] =useState(date);
+  const { date, setDate } = useDateStore();
+  const [value, setValue] = useState(date);
 
   const handleDateChange = (newValue) => {
     setDate(newValue);
@@ -26,13 +26,13 @@ export default function CustomMonthLayout() {
           height: "%50",
           width: "100%",
         }}
-        value={dayjs(value)} onChange={handleDateChange}
+        value={dayjs(value)}
+        onChange={handleDateChange}
       />
       <DatePicker
         justifyContent="center"
         label="Date"
         sx={{
-          
           display: { xs: "block", lg: "none" },
           textAlign: "center",
           margin: "0px auto",

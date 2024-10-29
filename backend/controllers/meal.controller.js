@@ -42,19 +42,24 @@ export const getMeals = async (req, res) => {
 
 export const getMealsByDate = async (req, res) => {
   const date = req.query.date;
-  console.log(date);
+  const dateWithTime = new Date(`${date}T12:00:00.000Z`);
 
-  const startDate = new Date(date);
+  const startDate = new Date(dateWithTime);
   startDate.setHours(0, 0, 0, 0);
 
-  const endDate = new Date(date);
+  const endDate = new Date(dateWithTime);
   endDate.setHours(23, 59, 59, 999);
 
   try {
-    const meals = await Meal.find({ date: 
-      { $gte: startDate, $lte: endDate }
-     });
-    res.status(200).json({ success: true, data: meals });
+    const meals = await Meal.find({ date: { $gte: startDate, $lte: endDate } });
+    const mealsWithFoods = await Promise.all(
+      meals.map(async (meal) => {
+        const foods = await Food.find({ mealId: meal._id });
+        meal.foods = foods;
+        return meal;
+      })
+    );
+    res.status(200).json({ success: true, data: mealsWithFoods });
   } catch (error) {
     console.log(error);
     res.status(400).json({ success: false, message: "Server error" });
