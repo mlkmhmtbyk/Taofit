@@ -3,8 +3,6 @@ import mongoose from "mongoose";
 
 export const createFood = async (req, res) => {
   const food = req.body;
-
-  console.log(food);
   if (
     !food.name ||
     !food.amount ||

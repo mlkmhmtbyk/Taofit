@@ -16,8 +16,6 @@ export default function CustomMonthLayout() {
     setValue(newValue);
   };
 
-  console.log(date);
-
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DateCalendar
@@ -38,6 +36,8 @@ export default function CustomMonthLayout() {
           margin: "0px auto",
           width: 150,
         }}
+        value={dayjs(value)}
+        onChange={handleDateChange}
       />
     </LocalizationProvider>
   );
