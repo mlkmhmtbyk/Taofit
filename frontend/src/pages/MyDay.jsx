@@ -9,6 +9,7 @@ import { useMealStore } from "../store/meal.js";
 import { useDateStore } from "../store/date.js";
 import { IconButton } from "@mui/material";
 import AddCircleOutlined from "@mui/icons-material/AddCircleOutlined";
+import MealForm from "../components/MealForm.jsx";
 
 const MyDay = () => {
   const { fetchMeals, meals } = useMealStore();
@@ -54,9 +55,8 @@ const MyDay = () => {
               justifyContent: "center",
             }}
           >
-            <IconButton aria-label="add meal">
-              <AddCircleOutlined />
-            </IconButton>
+            
+            <MealForm />
           </Grid>
         </Grid>
         <Grid size={{ xs: 1.5, lg: 3 }}>
