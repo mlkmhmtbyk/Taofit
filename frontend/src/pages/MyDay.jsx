@@ -7,6 +7,8 @@ import Progressbar from "../components/Progressbar.jsx";
 import PieChart from "../components/PieChart.jsx";
 import { useMealStore } from "../store/meal.js";
 import { useDateStore } from "../store/date.js";
+import { IconButton } from "@mui/material";
+import AddCircleOutlined from "@mui/icons-material/AddCircleOutlined";
 
 const MyDay = () => {
   const { fetchMeals, meals } = useMealStore();
@@ -33,11 +35,29 @@ const MyDay = () => {
           size={{ xs: 1.5 }}
           sx={{ display: { xs: "block", lg: "none" } }}
         ></Grid>
-        <Grid size={{ xs: 9, lg: 6 }}>
-          <Progressbar meals={meals} />
-          {meals.map((meal) => (
-            <MealTable key={meal._id} meal={meal} />
-          ))}
+        <Grid
+          justifyContent={"center"}
+          alignItems={"center"}
+          size={{ xs: 9, lg: 6 }}
+        >
+          <Grid>
+            <Progressbar meals={meals} />
+          </Grid>
+          <Grid>
+            {meals.map((meal) => (
+              <MealTable key={meal._id} meal={meal} />
+            ))}
+          </Grid>
+          <Grid
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <IconButton aria-label="add meal">
+              <AddCircleOutlined />
+            </IconButton>
+          </Grid>
         </Grid>
         <Grid size={{ xs: 1.5, lg: 3 }}>
           <PieChart />

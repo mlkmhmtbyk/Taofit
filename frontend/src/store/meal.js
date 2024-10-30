@@ -6,6 +6,8 @@ export const useMealStore = create(
     meals: [],
     setMeals: (meals) => set({ meals: meals }),
     fetchMeals: async (date) => {
+      
+      
       const formattedDate = date.$y + "-" + (date.$M + 1) + "-" + date.$D;
       try {
         const response = await axios.get(
