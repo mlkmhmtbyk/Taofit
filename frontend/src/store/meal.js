@@ -19,7 +19,7 @@ export const useMealStore = create(
     createMeal: async (meal) => {
       try {
         const response = await axios.post("api/meals/", meal);
-        set({ meals: [...meals, response.data.data] });
+        set((state) => ({ meals: [...state.meals, response.data.data] }));
       } catch (error) {
         console.error(error);
       }

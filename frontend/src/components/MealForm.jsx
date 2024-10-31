@@ -11,6 +11,8 @@ import { IconButton } from "@mui/material";
 import TimePicker from "./TimePicker.jsx";
 import Grid from "@mui/material/Grid2";
 import dayjs from "dayjs";
+import { useMealStore } from "../store/meal.js";
+import { useDateStore } from "../store/date.js";
 
 export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
@@ -19,6 +21,9 @@ export default function FormDialog() {
     time: dayjs().format("HH:mm"),
     foods: [],
   });
+
+  const { createMeal } = useMealStore();
+  const { date } = useDateStore();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -40,7 +45,14 @@ export default function FormDialog() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(meal);
+    console.log(date);
+    const formattedDate = date.$y + "-" + (date.$M + 1) + "-" + date.$D;
+    const newMeal = {
+      ...meal,
+      date: formattedDate,
+    };
+    createMeal(newMeal);
+    console.log(newMeal);
     handleClose();
   };
 
