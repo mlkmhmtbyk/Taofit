@@ -30,8 +30,8 @@ export default function FormDialog() {
 
   return (
     <React.Fragment>
-      <IconButton aria-label="add meal" onClick={handleClickOpen}>
-        <AddCircleOutlined />
+      <IconButton aria-label="add meal" size="large" onClick={handleClickOpen}>
+        <AddCircleOutlined fontSize="inherit" />
       </IconButton>
       <Dialog
         fullWidth={true}
@@ -51,7 +51,7 @@ export default function FormDialog() {
           },
         }}
       >
-        <DialogTitle>Add Meal</DialogTitle>
+        <DialogTitle>New Meal</DialogTitle>
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -84,13 +84,9 @@ export default function FormDialog() {
               <TimePicker />
             </Grid>
           </Grid>
-          <Grid item xs={12} sx={{ mt: 4 }}>
-            <FoodList />
-          </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button type="submit">Submit</Button>
+          <Button variant="contained" size="small" type="submit">Add</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>

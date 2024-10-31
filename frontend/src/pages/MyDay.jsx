@@ -7,8 +7,6 @@ import Progressbar from "../components/Progressbar.jsx";
 import PieChart from "../components/PieChart.jsx";
 import { useMealStore } from "../store/meal.js";
 import { useDateStore } from "../store/date.js";
-import { IconButton } from "@mui/material";
-import AddCircleOutlined from "@mui/icons-material/AddCircleOutlined";
 import MealForm from "../components/MealForm.jsx";
 
 const MyDay = () => {
@@ -46,7 +44,9 @@ const MyDay = () => {
           </Grid>
           <Grid>
             {meals.map((meal) => (
-              <MealTable key={meal._id} meal={meal} />
+              <Box key={meal._id}>
+                <MealTable key={meal._id} meal={meal} />
+              </Box>
             ))}
           </Grid>
           <Grid
@@ -55,7 +55,6 @@ const MyDay = () => {
               justifyContent: "center",
             }}
           >
-            
             <MealForm />
           </Grid>
         </Grid>
