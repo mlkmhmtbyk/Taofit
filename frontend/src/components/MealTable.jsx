@@ -9,7 +9,6 @@ import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
 import AddCircleOutlined from "@mui/icons-material/AddCircleOutlined";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 
 export default function BasicTable({ meal }) {
   return (
@@ -68,11 +67,15 @@ export default function BasicTable({ meal }) {
               <TableCell align="right">{food.protein}</TableCell>
             </TableRow>
           ))}
-          <IconButton aria-label="add meal" size="small">
-            <AddCircleOutlined fontSize="inherit" />
-          </IconButton>
         </TableBody>
       </Table>
+      <IconButton
+        sx={{ marginLeft: "20px", marginBottom: "5px" }}
+        aria-label="add meal"
+        size="small"
+      >
+        <AddCircleOutlined fontSize="inherit" />
+      </IconButton>
     </TableContainer>
   );
 }

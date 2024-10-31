@@ -4,21 +4,21 @@ import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import CloseIcon from "@mui/icons-material/Close";
 import AddCircleOutlined from "@mui/icons-material/AddCircleOutlined";
 import { IconButton } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import TimePicker from "./TimePicker.jsx";
-import FoodList from "./FoodList.jsx";
 import Grid from "@mui/material/Grid2";
+import dayjs from "dayjs";
 
 export default function FormDialog() {
   const [open, setOpen] = React.useState(false);
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const [meal, setMeal] = React.useState({
+    name: "",
+    time: dayjs().format("HH:mm"),
+    foods: [],
+  });
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -28,6 +28,22 @@ export default function FormDialog() {
     setOpen(false);
   };
 
+  const handleTimeChange = (newValue) => {
+    console.log(newValue.$H + ":" + newValue.$m);
+    setMeal({ ...meal, time: newValue.$H + ":" + newValue.$m });
+  };
+
+  const handleInputChange = (event) => {
+    const { value } = event.target;
+    setMeal({ ...meal, name: value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(meal);
+    handleClose();
+  };
+
   return (
     <React.Fragment>
       <IconButton aria-label="add meal" size="large" onClick={handleClickOpen}>
@@ -35,20 +51,12 @@ export default function FormDialog() {
       </IconButton>
       <Dialog
         fullWidth={true}
-        fullScreen={fullScreen}
         open={open}
         onClose={handleClose}
         disableEnforceFocus
         PaperProps={{
           component: "form",
-          onSubmit: (event) => {
-            event.preventDefault();
-            const formData = new FormData(event.currentTarget);
-            const formJson = Object.fromEntries(formData.entries());
-            const email = formJson.email;
-            console.log(email);
-            handleClose();
-          },
+          onSubmit: handleSubmit,
         }}
       >
         <DialogTitle>New Meal</DialogTitle>
@@ -78,15 +86,22 @@ export default function FormDialog() {
                 fullWidth
                 variant="standard"
                 autoComplete="mealName"
+                value={meal.name}
+                onChange={handleInputChange}
               />
             </Grid>
             <Grid size={{ xs: 12, lg: 6 }}>
-              <TimePicker />
+              <TimePicker
+                value={dayjs(meal.time, "HH:mm")}
+                onChange={handleTimeChange}
+              />
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" size="small" type="submit">Add</Button>
+          <Button variant="contained" size="small" type="submit">
+            Add
+          </Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
