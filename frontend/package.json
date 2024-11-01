@@ -11,12 +11,11 @@
   },
   "dependencies": {
     "@devexpress/dx-react-chart-material-ui": "^4.0.9",
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
     "@fontsource/roboto": "^5.1.0",
     "@mui/icons-material": "^6.1.4",
     "@mui/material": "^6.1.4",
     "@mui/x-date-pickers": "^7.21.0",
+    "@toolpad/core": "^0.8.1",
     "axios": "^1.7.7",
     "dayjs": "^1.11.13",
     "react": "^18.3.1",

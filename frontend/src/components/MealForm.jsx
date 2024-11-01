@@ -19,7 +19,6 @@ export default function FormDialog() {
   const [meal, setMeal] = React.useState({
     name: "",
     time: dayjs().format("HH:mm"),
-    foods: [],
   });
 
   const { createMeal } = useMealStore();
@@ -45,14 +44,12 @@ export default function FormDialog() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(date);
     const formattedDate = date.$y + "-" + (date.$M + 1) + "-" + date.$D;
     const newMeal = {
       ...meal,
       date: formattedDate,
     };
     createMeal(newMeal);
-    console.log(newMeal);
     handleClose();
   };
 
@@ -98,7 +95,6 @@ export default function FormDialog() {
                 fullWidth
                 variant="standard"
                 autoComplete="mealName"
-                value={meal.name}
                 onChange={handleInputChange}
               />
             </Grid>

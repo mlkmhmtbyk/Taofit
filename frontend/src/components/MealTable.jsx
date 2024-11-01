@@ -7,8 +7,9 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import IconButton from "@mui/material/IconButton";
-import AddCircleOutlined from "@mui/icons-material/AddCircleOutlined";
 import EditIcon from "@mui/icons-material/Edit";
+import UpdateMealForm from "./UpdateMealForm.jsx";
+import FoodForm from "./FoodForm.jsx";
 
 export default function BasicTable({ meal }) {
   return (
@@ -20,9 +21,7 @@ export default function BasicTable({ meal }) {
         <TableHead>
           <TableRow>
             <TableCell sx={{ fontWeight: "bold", width: "0px" }} align="right">
-              <IconButton aria-label="delete" size="small">
-                <EditIcon />
-              </IconButton>
+              <UpdateMealForm meal={meal} />
             </TableCell>
             <TableCell sx={{ fontWeight: "bold", maxWidth: "50px" }}>
               {meal.name}
@@ -53,7 +52,11 @@ export default function BasicTable({ meal }) {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell align="right" sx={{ width: "0px" }}>
-                <IconButton aria-label="add meal" size="small">
+                <IconButton
+                  aria-label="edit food"
+                  sx={{ width: "-10px" }}
+                  size="small"
+                >
                   <EditIcon fontSize="inherit" />
                 </IconButton>
               </TableCell>
@@ -69,13 +72,7 @@ export default function BasicTable({ meal }) {
           ))}
         </TableBody>
       </Table>
-      <IconButton
-        sx={{ marginLeft: "20px", marginBottom: "5px" }}
-        aria-label="add meal"
-        size="small"
-      >
-        <AddCircleOutlined fontSize="inherit" />
-      </IconButton>
+      <FoodForm id={meal._id} />
     </TableContainer>
   );
 }

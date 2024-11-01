@@ -6,10 +6,10 @@ export const createFood = async (req, res) => {
   if (
     !food.name ||
     !food.amount ||
-    !food.calorie ||
+    !food.calories ||
     !food.fat ||
     !food.protein ||
-    !food.carbo ||
+    !food.carbs ||
     !food.mealId
   ) {
     return res
