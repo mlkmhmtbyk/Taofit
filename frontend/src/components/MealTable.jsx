@@ -10,8 +10,11 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import UpdateMealForm from "./UpdateMealForm.jsx";
 import FoodForm from "./FoodForm.jsx";
+import { useEffect } from "react";
 
 export default function BasicTable({ meal }) {
+  
+
   return (
     <TableContainer
       sx={{ display: "block", marginBottom: "30px" }}

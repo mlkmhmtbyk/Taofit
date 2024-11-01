@@ -35,7 +35,6 @@ export default function FoodForm(mealId) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("food:", food);
     await createFood(food);
     handleClose();
   };

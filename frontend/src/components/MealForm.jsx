@@ -33,7 +33,6 @@ export default function FormDialog() {
   };
 
   const handleTimeChange = (newValue) => {
-    console.log(newValue.$H + ":" + newValue.$m);
     setMeal({ ...meal, time: newValue.$H + ":" + newValue.$m });
   };
 
