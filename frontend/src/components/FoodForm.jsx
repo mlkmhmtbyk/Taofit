@@ -1,5 +1,7 @@
 import React from "react";
+import { useEffect } from "react";
 import { useFoodStore } from "../store/food";
+import { useMealStore } from "../store/meal";
 import AddCircleOutlined from "@mui/icons-material/AddCircleOutlined";
 import { IconButton } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
@@ -10,37 +12,65 @@ import TextField from "@mui/material/TextField";
 import CloseIcon from "@mui/icons-material/Close";
 import Grid from "@mui/material/Grid2";
 import Button from "@mui/material/Button";
+import { useNotifications } from "@toolpad/core/useNotifications";
 
 export default function FoodForm(mealId) {
   const [open, setOpen] = React.useState(false);
-  const [food, setFood] = React.useState({
-    name: "",
-    amount: "",
-    calories: 0,
-    fat: 0,
-    protein: 0,
-    carbs: 0,
-    mealId: mealId.id,
-  });
+  const [newFood, setNewFood] = React.useState({});
 
   const { createFood } = useFoodStore();
+  const { food, setFood } = useFoodStore();
+  const { updateMeal } = useMealStore();
+  const notifications = useNotifications();
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    setNewFood({});
     setOpen(false);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    await createFood(food);
+  useEffect(() => {
+    if (food) {
+      const selectedMeal = useMealStore
+        .getState()
+        .meals.find((meal) => meal._id === food.mealId);
+      if (selectedMeal) {
+        updateMeal({ ...selectedMeal, foods: [...selectedMeal.foods, food] });
+      }
+    }
+  }, [food]);
+
+  const handleAdd = async () => {
+    if (
+      !newFood.name ||
+      !newFood.amount ||
+      !newFood.calories ||
+      !newFood.fat ||
+      !newFood.protein ||
+      !newFood.carbs
+    ) {
+      notifications.show("Please fill in all fields", {
+        severity: "error",
+        autoHideDuration: 2000,
+      });
+      return;
+    }
+    newFood.mealId = mealId.id;
+    const result = await createFood(newFood);
+    if (result.success) {
+      notifications.show("Food added successfully", {
+        severity: "info",
+        autoHideDuration: 2000,
+      });
+    }
     handleClose();
   };
 
   const handleInputChange = (event) => {
-    setFood({ ...food, [event.target.name]: event.target.value });
+    setNewFood({ ...newFood, [event.target.name]: event.target.value });
   };
   return (
     <React.Fragment>
@@ -54,7 +84,7 @@ export default function FoodForm(mealId) {
         disableEnforceFocus
         PaperProps={{
           component: "form",
-          onSubmit: handleSubmit,
+          onSubmit: handleAdd,
         }}
       >
         <DialogTitle>Add Food</DialogTitle>
@@ -163,7 +193,7 @@ export default function FoodForm(mealId) {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" size="small" type="submit">
+          <Button variant="contained" size="small" onClick={handleAdd}>
             Add
           </Button>
         </DialogActions>
