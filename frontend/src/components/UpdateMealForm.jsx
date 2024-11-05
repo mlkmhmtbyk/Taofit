@@ -51,7 +51,9 @@ export default function FormDialog(props) {
   };
 
   const handleTimeChange = (newValue) => {
-    setNewMeal({ ...newMeal, time: newValue.$H + ":" + newValue.$m });
+    const hours = newValue.$H.toString().padStart(2, "0");
+    const minutes = newValue.$m.toString().padStart(2, "0");
+    setNewMeal({ ...newMeal, time: hours + ":" + minutes });
   };
 
   const handleInputChange = (event) => {
@@ -111,7 +113,7 @@ export default function FormDialog(props) {
           <CloseIcon />
         </IconButton>
         <DialogContent>
-          <Grid container spacing={2}>
+          <Grid container spacing={4} ml={2} mr={2}>
             <Grid size={{ xs: 12, lg: 6 }}>
               <TextField
                 autoFocus
@@ -142,7 +144,7 @@ export default function FormDialog(props) {
             spacing={4}
             justifyContent="space-between"
             width="100%"
-            ml={2}
+            ml={4}
           >
             <Grid>
               <Button variant="contained" size="small" type="submit">

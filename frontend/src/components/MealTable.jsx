@@ -10,11 +10,10 @@ import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
 import UpdateMealForm from "./UpdateMealForm.jsx";
 import FoodForm from "./FoodForm.jsx";
+import UpdateFoodForm from "./UpdateFoodForm.jsx";
 import { useEffect } from "react";
 
 export default function BasicTable({ meal }) {
-  
-
   return (
     <TableContainer
       sx={{ display: "block", marginBottom: "30px" }}
@@ -55,13 +54,7 @@ export default function BasicTable({ meal }) {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell align="right" sx={{ width: "0px" }}>
-                <IconButton
-                  aria-label="edit food"
-                  sx={{ width: "-10px" }}
-                  size="small"
-                >
-                  <EditIcon fontSize="inherit" />
-                </IconButton>
+                <UpdateFoodForm id={meal._id} />
               </TableCell>
               <TableCell align="left" component="th" scope="row">
                 {food.name}

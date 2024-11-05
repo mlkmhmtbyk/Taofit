@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useFoodStore } from "../store/food";
 import { useMealStore } from "../store/meal";
-import AddCircleOutlined from "@mui/icons-material/AddCircleOutlined";
+import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -12,6 +12,7 @@ import TextField from "@mui/material/TextField";
 import CloseIcon from "@mui/icons-material/Close";
 import Grid from "@mui/material/Grid2";
 import Button from "@mui/material/Button";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { useNotifications } from "@toolpad/core/useNotifications";
 
 export default function FoodForm(mealId) {
@@ -74,8 +75,8 @@ export default function FoodForm(mealId) {
   };
   return (
     <React.Fragment>
-      <IconButton aria-label="add food" onClick={handleClickOpen}>
-        <AddCircleOutlined fontSize="inherit" />
+      <IconButton aria-label="edit food" size="small" onClick={handleClickOpen}>
+        <EditIcon fontSize="inherit" />
       </IconButton>
       <Dialog
         fullWidth={true}
@@ -87,7 +88,7 @@ export default function FoodForm(mealId) {
           onSubmit: handleAdd,
         }}
       >
-        <DialogTitle>Add Food</DialogTitle>
+        <DialogTitle>Edit Food</DialogTitle>
         <IconButton
           aria-label="close"
           onClick={handleClose}
@@ -101,13 +102,7 @@ export default function FoodForm(mealId) {
           <CloseIcon />
         </IconButton>
         <DialogContent>
-          <Grid
-            container
-            spacing={4}
-            justifyContent="space-between"
-            ml={2}
-            mr={2}
-          >
+          <Grid container spacing={4}>
             <Grid size={{ xs: 6 }}>
               <TextField
                 autoFocus
@@ -204,8 +199,13 @@ export default function FoodForm(mealId) {
             spacing={4}
             justifyContent="space-between"
             width="100%"
-            ml={4}
+            ml={2}
           >
+            <Grid>
+              <Button variant="contained" size="small" type="submit">
+                Update
+              </Button>
+            </Grid>
             <Grid
               sx={{
                 textAlign: "right",
@@ -215,9 +215,15 @@ export default function FoodForm(mealId) {
                 mr: 1,
               }}
             >
-              <Button variant="contained" size="small" onClick={handleAdd}>
-                Add
-              </Button>
+              <IconButton
+                aria-label="delete"
+                size="large"
+                onClick={() => {
+                  handleClickDelete();
+                }}
+              >
+                <DeleteIcon fontSize="inherit" />
+              </IconButton>
             </Grid>
           </Grid>
         </DialogActions>

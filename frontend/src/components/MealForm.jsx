@@ -41,14 +41,14 @@ export default function FormDialog() {
     setMeal({ ...meal, name: value });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const formattedDate = date.$y + "-" + (date.$M + 1) + "-" + date.$D;
     const newMeal = {
       ...meal,
       date: formattedDate,
     };
-    createMeal(newMeal);
+    await createMeal(newMeal);
     handleClose();
   };
 
@@ -81,7 +81,13 @@ export default function FormDialog() {
           <CloseIcon />
         </IconButton>
         <DialogContent>
-          <Grid container spacing={2}>
+          <Grid
+            container
+            spacing={4}
+            justifyContent="space-between"
+            ml={2}
+            mr={2}
+          >
             <Grid size={{ xs: 12, lg: 6 }}>
               <TextField
                 autoFocus
@@ -106,9 +112,27 @@ export default function FormDialog() {
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" size="small" type="submit">
-            Add
-          </Button>
+          <Grid
+            container
+            spacing={4}
+            justifyContent="space-between"
+            width="100%"
+            ml={4}
+          >
+            <Grid
+              sx={{
+                textAlign: "right",
+                display: "flex",
+                alignItems: "center",
+                mt: -2,
+                mr: 1,
+              }}
+            >
+              <Button variant="contained" size="small" type="submit">
+                Add
+              </Button>
+            </Grid>
+          </Grid>
         </DialogActions>
       </Dialog>
     </React.Fragment>

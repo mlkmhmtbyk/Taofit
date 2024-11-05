@@ -5,19 +5,12 @@ export const useFoodStore = create((set) => ({
   food: {},
   setFood: async (newFood) => {
     console.log("setFood fonksiyonu çağırıldı:", newFood);
-    console.log("food:", useFoodStore.getState().food);
     set({ food: newFood });
-    console.log("food:", useFoodStore.getState().food);
   },
   createFood: async (food) => {
     try {
       const response = await axios.post("api/foods/", food);
       set((state) => ({ food: response.data.data }));
-      // const meals = useMealStore.getState().meals;
-      // const { updateMeal } = useMealStore.getState();
-      // const selectedMeal = meals.find((meal) => meal._id === food.mealId);
-      // selectedMeal.foods = [...selectedMeal.foods, response.data.data];
-      // await updateMeal(selectedMeal);
       return {
         success: true,
         message: "Food created successfully.",
