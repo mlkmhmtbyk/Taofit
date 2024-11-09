@@ -18,8 +18,7 @@ export default function FoodForm(mealId) {
   const [newFood, setNewFood] = React.useState({});
 
   const { createFood } = useFoodStore();
-  const { food, setFood } = useFoodStore();
-  const { updateMeal } = useMealStore();
+  const { meals, setMeals } = useMealStore();
   const notifications = useNotifications();
 
   const handleClickOpen = () => {
@@ -48,6 +47,18 @@ export default function FoodForm(mealId) {
     }
     newFood.mealId = mealId.id;
     const result = await createFood(newFood);
+
+    const selectedMeal = meals.find((meal) => meal._id === mealId.id);
+    if (selectedMeal) {
+      const updatedMeal = {
+        ...selectedMeal,
+        foods: [...selectedMeal.foods, result.data],
+      };
+      setMeals(
+        meals.map((meal) => (meal._id === updatedMeal._id ? updatedMeal : meal))
+      );
+    }
+
     if (result.success) {
       notifications.show("Food added successfully", {
         severity: "info",

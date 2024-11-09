@@ -15,7 +15,7 @@ const MyDay = () => {
 
   useEffect(() => {
     fetchMeals(date);
-  }, [date, fetchMeals]);
+  }, [date]);
 
   return (
     <Box>

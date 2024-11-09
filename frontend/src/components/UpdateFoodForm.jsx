@@ -12,6 +12,7 @@ import Grid from "@mui/material/Grid2";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNotifications } from "@toolpad/core/useNotifications";
+import { useMealStore } from "../store/meal";
 
 export default function UpdateFoodForm(props) {
   const [updatedFood, setUpdatedFood] = React.useState(props.updatedFood);
@@ -20,6 +21,7 @@ export default function UpdateFoodForm(props) {
 
   const { updateFood, deleteFood } = useFoodStore();
   const { food, setFood } = useFoodStore();
+  const { meals, setMeals } = useMealStore();
   const notifications = useNotifications();
 
   const handleClickOpen = () => {
@@ -49,6 +51,18 @@ export default function UpdateFoodForm(props) {
       return;
     }
     const result = await updateFood(updatedFood);
+    const selectedMeal = meals.find((meal) => meal._id === food.mealId);
+    if (selectedMeal) {
+      const updatedMeal = {
+        ...selectedMeal,
+        foods: selectedMeal.foods.map((f) =>
+          f._id === updatedFood._id ? updatedFood : f
+        ),
+      };
+      setMeals(
+        meals.map((meal) => (meal._id === updatedMeal._id ? updatedMeal : meal))
+      );
+    }
     if (result.success) {
       notifications.show("Food updated successfully", {
         severity: "info",
@@ -66,8 +80,22 @@ export default function UpdateFoodForm(props) {
   };
 
   const handleClickDelete = async () => {
-    const { success, message } = await deleteFood(updatedFood._id);
-    if (success) {
+    const result = await deleteFood(updatedFood._id);
+    const selectedMeal = meals.find((meal) => meal._id === food.mealId);
+    if (selectedMeal) {
+      const updatedMeal = {
+        ...selectedMeal,
+        foods: selectedMeal.foods.filter((f) => f._id !== updatedFood._id),
+      };
+      setMeals(
+        meals.map((meal) => (meal._id === updatedMeal._id ? updatedMeal : meal))
+      );
+    }
+    if (result.success) {
+      notifications.show("Food deleted successfully", {
+        severity: "info",
+        autoHideDuration: 2000,
+      });
       handleClose();
     }
     return success;

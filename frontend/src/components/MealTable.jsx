@@ -15,30 +15,6 @@ import { useMealStore } from "../store/meal";
 import { useDateStore } from "../store/date.js";
 
 export default function BasicTable({ meal }) {
-  const { food } = useFoodStore();
-  const { updateMeal, fetchMeals } = useMealStore();
-  const { date } = useDateStore();
-
-  useEffect(() => {
-    if (food) {
-      const selectedMeal = useMealStore
-        .getState()
-        .meals.find((meal) => meal._id === food.mealId);
-      if (selectedMeal) {
-        const existingFood = selectedMeal.foods.find((f) => f._id === food._id);
-        if (existingFood) {
-          const updatedFood = selectedMeal.foods.map((f) =>
-            f._id === food._id ? food : f
-          );
-          updateMeal({ ...selectedMeal, foods: updatedFood });
-        } else {
-          updateMeal({ ...selectedMeal, foods: [...selectedMeal.foods, food] });
-        }
-      }
-    } else {
-      fetchMeals(date);
-    }
-  }, [food]);
 
   return (
     <TableContainer
