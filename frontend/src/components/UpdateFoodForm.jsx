@@ -22,7 +22,6 @@ export default function UpdateFoodForm(props) {
   const { updateFood, deleteFood } = useFoodStore();
   const { meals, setMeals } = useMealStore();
   const { food, setFood } = useFoodStore();
-  const { meals, setMeals } = useMealStore();
   const notifications = useNotifications();
 
   const handleClickOpen = () => {
@@ -52,18 +51,6 @@ export default function UpdateFoodForm(props) {
       return;
     }
     const result = await updateFood(updatedFood);
-    const selectedMeal = meals.find((meal) => meal._id === food.mealId);
-    if (selectedMeal) {
-      const updatedMeal = {
-        ...selectedMeal,
-        foods: selectedMeal.foods.map((f) =>
-          f._id === updatedFood._id ? updatedFood : f
-        ),
-      };
-      setMeals(
-        meals.map((meal) => (meal._id === updatedMeal._id ? updatedMeal : meal))
-      );
-    }
     if (result.success) {
       notifications.show("Food updated successfully", {
         severity: "info",
@@ -82,7 +69,20 @@ export default function UpdateFoodForm(props) {
 
   const handleClickDelete = async () => {
     const { success, message } = await deleteFood(updatedFood._id);
+    const mealId = updatedFood.mealId;
+
     if (success) {
+      
+      const updatedMeals = meals.map((meal) => {
+        if (meal._id === mealId) {
+          return {
+            ...meal,
+            foods: meal.foods.filter((food) => food._id !== updatedFood._id),
+          };
+        }
+        return meal;
+      });
+      setMeals(updatedMeals);
       handleClose();
     }
     return success;
