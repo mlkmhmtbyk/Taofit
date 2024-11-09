@@ -28,6 +28,7 @@ export default function FormDialog(props) {
   const notifications = useNotifications();
 
   const handleClickOpen = () => {
+    setNewMeal(props.meal);
     setOpen(true);
   };
 

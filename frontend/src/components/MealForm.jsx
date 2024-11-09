@@ -33,7 +33,9 @@ export default function FormDialog() {
   };
 
   const handleTimeChange = (newValue) => {
-    setMeal({ ...meal, time: newValue.$H + ":" + newValue.$m });
+    const hours = newValue.$H.toString().padStart(2, "0");
+    const minutes = newValue.$m.toString().padStart(2, "0");
+    setMeal({ ...meal, time: hours + ":" + minutes });
   };
 
   const handleInputChange = (event) => {

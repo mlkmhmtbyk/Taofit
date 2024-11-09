@@ -1,5 +1,4 @@
 import React from "react";
-import { useEffect } from "react";
 import { useFoodStore } from "../store/food";
 import { useMealStore } from "../store/meal";
 import AddCircleOutlined from "@mui/icons-material/AddCircleOutlined";
@@ -31,17 +30,6 @@ export default function FoodForm(mealId) {
     setNewFood({});
     setOpen(false);
   };
-
-  useEffect(() => {
-    if (food) {
-      const selectedMeal = useMealStore
-        .getState()
-        .meals.find((meal) => meal._id === food.mealId);
-      if (selectedMeal) {
-        updateMeal({ ...selectedMeal, foods: [...selectedMeal.foods, food] });
-      }
-    }
-  }, [food]);
 
   const handleAdd = async () => {
     if (

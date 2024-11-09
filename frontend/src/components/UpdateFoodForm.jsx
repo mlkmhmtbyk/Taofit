@@ -1,7 +1,5 @@
 import React from "react";
-import { useEffect } from "react";
 import { useFoodStore } from "../store/food";
-import { useMealStore } from "../store/meal";
 import EditIcon from "@mui/icons-material/Edit";
 import { IconButton } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
@@ -15,43 +13,34 @@ import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNotifications } from "@toolpad/core/useNotifications";
 
-export default function FoodForm(mealId) {
-  const [open, setOpen] = React.useState(false);
-  const [newFood, setNewFood] = React.useState({});
+export default function UpdateFoodForm(props) {
+  const [updatedFood, setUpdatedFood] = React.useState(props.updatedFood);
 
-  const { createFood } = useFoodStore();
+  const [open, setOpen] = React.useState(false);
+
+  const { updateFood, deleteFood } = useFoodStore();
   const { food, setFood } = useFoodStore();
-  const { updateMeal } = useMealStore();
   const notifications = useNotifications();
 
   const handleClickOpen = () => {
+    setUpdatedFood(props.updatedFood);
+    setFood(props.updatedFood);
     setOpen(true);
   };
 
   const handleClose = () => {
-    setNewFood({});
     setOpen(false);
   };
 
-  useEffect(() => {
-    if (food) {
-      const selectedMeal = useMealStore
-        .getState()
-        .meals.find((meal) => meal._id === food.mealId);
-      if (selectedMeal) {
-        updateMeal({ ...selectedMeal, foods: [...selectedMeal.foods, food] });
-      }
-    }
-  }, [food]);
-
-  const handleAdd = async () => {
+  const handleUpdate = async (event) => {
+    event.preventDefault();
     if (
-      !newFood.name ||
-      !newFood.amount ||
-      !newFood.calories ||
-      !newFood.fat ||
-      !newFood.protein ||
-      !newFood.carbs
+      !updatedFood.name ||
+      !updatedFood.amount ||
+      !updatedFood.calories ||
+      !updatedFood.fat ||
+      !updatedFood.protein ||
+      !updatedFood.carbs
     ) {
       notifications.show("Please fill in all fields", {
         severity: "error",
@@ -59,10 +48,9 @@ export default function FoodForm(mealId) {
       });
       return;
     }
-    newFood.mealId = mealId.id;
-    const result = await createFood(newFood);
+    const result = await updateFood(updatedFood);
     if (result.success) {
-      notifications.show("Food added successfully", {
+      notifications.show("Food updated successfully", {
         severity: "info",
         autoHideDuration: 2000,
       });
@@ -71,8 +59,20 @@ export default function FoodForm(mealId) {
   };
 
   const handleInputChange = (event) => {
-    setNewFood({ ...newFood, [event.target.name]: event.target.value });
+    setUpdatedFood((prevFood) => ({
+      ...prevFood,
+      [event.target.name]: event.target.value,
+    }));
   };
+
+  const handleClickDelete = async () => {
+    const { success, message } = await deleteFood(updatedFood._id);
+    if (success) {
+      handleClose();
+    }
+    return success;
+  };
+
   return (
     <React.Fragment>
       <IconButton aria-label="edit food" size="small" onClick={handleClickOpen}>
@@ -85,7 +85,7 @@ export default function FoodForm(mealId) {
         disableEnforceFocus
         PaperProps={{
           component: "form",
-          onSubmit: handleAdd,
+          onSubmit: handleUpdate,
         }}
       >
         <DialogTitle>Edit Food</DialogTitle>
@@ -114,6 +114,7 @@ export default function FoodForm(mealId) {
                 fullWidth
                 variant="standard"
                 autoComplete="food name"
+                value={updatedFood.name}
                 onChange={handleInputChange}
               />
             </Grid>
@@ -128,6 +129,7 @@ export default function FoodForm(mealId) {
                 fullWidth
                 variant="standard"
                 autoComplete="amount"
+                value={updatedFood.amount}
                 onChange={handleInputChange}
               />
             </Grid>
@@ -143,6 +145,7 @@ export default function FoodForm(mealId) {
                 fullWidth
                 variant="standard"
                 autoComplete="calories"
+                value={updatedFood.calories}
                 onChange={handleInputChange}
               />
             </Grid>
@@ -158,6 +161,7 @@ export default function FoodForm(mealId) {
                 fullWidth
                 variant="standard"
                 autoComplete="Carbs"
+                value={updatedFood.carbs}
                 onChange={handleInputChange}
               />
             </Grid>
@@ -173,6 +177,7 @@ export default function FoodForm(mealId) {
                 fullWidth
                 variant="standard"
                 autoComplete="fat"
+                value={updatedFood.fat}
                 onChange={handleInputChange}
               />
             </Grid>
@@ -188,6 +193,7 @@ export default function FoodForm(mealId) {
                 fullWidth
                 variant="standard"
                 autoComplete="protein"
+                value={updatedFood.protein}
                 onChange={handleInputChange}
               />
             </Grid>
@@ -231,3 +237,7 @@ export default function FoodForm(mealId) {
     </React.Fragment>
   );
 }
+
+var Deneme = (mealId) => {
+  return <div></div>;
+};

@@ -6,14 +6,40 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import IconButton from "@mui/material/IconButton";
-import EditIcon from "@mui/icons-material/Edit";
 import UpdateMealForm from "./UpdateMealForm.jsx";
 import FoodForm from "./FoodForm.jsx";
 import UpdateFoodForm from "./UpdateFoodForm.jsx";
 import { useEffect } from "react";
+import { useFoodStore } from "../store/food";
+import { useMealStore } from "../store/meal";
+import { useDateStore } from "../store/date.js";
 
 export default function BasicTable({ meal }) {
+  const { food } = useFoodStore();
+  const { updateMeal, fetchMeals } = useMealStore();
+  const { date } = useDateStore();
+
+  useEffect(() => {
+    if (food) {
+      const selectedMeal = useMealStore
+        .getState()
+        .meals.find((meal) => meal._id === food.mealId);
+      if (selectedMeal) {
+        const existingFood = selectedMeal.foods.find((f) => f._id === food._id);
+        if (existingFood) {
+          const updatedFood = selectedMeal.foods.map((f) =>
+            f._id === food._id ? food : f
+          );
+          updateMeal({ ...selectedMeal, foods: updatedFood });
+        } else {
+          updateMeal({ ...selectedMeal, foods: [...selectedMeal.foods, food] });
+        }
+      }
+    } else {
+      fetchMeals(date);
+    }
+  }, [food]);
+
   return (
     <TableContainer
       sx={{ display: "block", marginBottom: "30px" }}
@@ -54,7 +80,7 @@ export default function BasicTable({ meal }) {
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell align="right" sx={{ width: "0px" }}>
-                <UpdateFoodForm id={meal._id} />
+                <UpdateFoodForm updatedFood={food} />
               </TableCell>
               <TableCell align="left" component="th" scope="row">
                 {food.name}
