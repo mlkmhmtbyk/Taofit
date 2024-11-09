@@ -35,8 +35,6 @@ export default function BasicTable({ meal }) {
           updateMeal({ ...selectedMeal, foods: [...selectedMeal.foods, food] });
         }
       }
-    } else {
-      fetchMeals(date);
     }
   }, [food]);
 

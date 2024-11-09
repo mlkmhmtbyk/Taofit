@@ -12,6 +12,7 @@ import Grid from "@mui/material/Grid2";
 import Button from "@mui/material/Button";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useNotifications } from "@toolpad/core/useNotifications";
+import { useMealStore } from "../store/meal";
 
 export default function UpdateFoodForm(props) {
   const [updatedFood, setUpdatedFood] = React.useState(props.updatedFood);
@@ -19,6 +20,7 @@ export default function UpdateFoodForm(props) {
   const [open, setOpen] = React.useState(false);
 
   const { updateFood, deleteFood } = useFoodStore();
+  const { meals, setMeals } = useMealStore();
   const { food, setFood } = useFoodStore();
   const notifications = useNotifications();
 
@@ -67,7 +69,20 @@ export default function UpdateFoodForm(props) {
 
   const handleClickDelete = async () => {
     const { success, message } = await deleteFood(updatedFood._id);
+    const mealId = updatedFood.mealId;
+
     if (success) {
+      
+      const updatedMeals = meals.map((meal) => {
+        if (meal._id === mealId) {
+          return {
+            ...meal,
+            foods: meal.foods.filter((food) => food._id !== updatedFood._id),
+          };
+        }
+        return meal;
+      });
+      setMeals(updatedMeals);
       handleClose();
     }
     return success;
