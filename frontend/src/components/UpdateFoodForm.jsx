@@ -20,6 +20,7 @@ export default function UpdateFoodForm(props) {
   const [open, setOpen] = React.useState(false);
 
   const { updateFood, deleteFood } = useFoodStore();
+  const { meals, setMeals } = useMealStore();
   const { food, setFood } = useFoodStore();
   const { meals, setMeals } = useMealStore();
   const notifications = useNotifications();
@@ -80,22 +81,8 @@ export default function UpdateFoodForm(props) {
   };
 
   const handleClickDelete = async () => {
-    const result = await deleteFood(updatedFood._id);
-    const selectedMeal = meals.find((meal) => meal._id === food.mealId);
-    if (selectedMeal) {
-      const updatedMeal = {
-        ...selectedMeal,
-        foods: selectedMeal.foods.filter((f) => f._id !== updatedFood._id),
-      };
-      setMeals(
-        meals.map((meal) => (meal._id === updatedMeal._id ? updatedMeal : meal))
-      );
-    }
-    if (result.success) {
-      notifications.show("Food deleted successfully", {
-        severity: "info",
-        autoHideDuration: 2000,
-      });
+    const { success, message } = await deleteFood(updatedFood._id);
+    if (success) {
       handleClose();
     }
     return success;
