@@ -16,23 +16,14 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
       theme.palette.grey[theme.palette.mode === "light" ? 200 : 800],
   },
   [`& .${linearProgressClasses.bar}`]: {
-    borderRadius: 5,
+    borderRadius: 10,
     backgroundColor: theme.palette.mode === "light" ? "#1a90ff" : "#308fe8",
   },
 }));
 
-function CalculateTotalCaloryInDay(meals) {
-  let totalCalory = 0;
-  meals.forEach((meal) => {
-    meal.foods.forEach((food) => {
-      totalCalory += food.calories;
-    });
-  });
-  return totalCalory;
-}
-
 export default function CustomizedProgressBars(props) {
   let meals = props.meals;
+  let overFlow = false;
   let [totalCalory, setTotalCalory] = useState(
     CalculateTotalCaloryInDay(meals)
   );
@@ -41,6 +32,20 @@ export default function CustomizedProgressBars(props) {
   useEffect(() => {
     setTotalCalory(CalculateTotalCaloryInDay(meals));
   }, [meals]);
+
+  function CalculateTotalCaloryInDay(meals) {
+    let totalCalory = 0;
+    meals.forEach((meal) => {
+      meal.foods.forEach((food) => {
+        totalCalory += food.calories;
+      });
+    });
+    let targetCalory = 2500;
+    if (totalCalory > targetCalory) {
+      overFlow = true;
+    }
+    return totalCalory;
+  }
 
   return (
     <div>
@@ -54,7 +59,12 @@ export default function CustomizedProgressBars(props) {
         </Typography>
         <BorderLinearProgress
           variant="determinate"
-          value={(100 * totalCalory) / targetCalory}
+          value={overFlow ? 100 : (100 * totalCalory) / targetCalory}
+          sx={{
+            "& .MuiLinearProgress-bar": {
+              transition: "none",
+            },
+          }}
         />
       </Box>
     </div>
