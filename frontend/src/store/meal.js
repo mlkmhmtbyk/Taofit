@@ -5,7 +5,7 @@ export const useMealStore = create(
   (set) => ({
     meals: [],
     setMeals: (meals) => set({ meals: meals }),
-    fetchMeals: async (date) => {
+    fetchMealsInDay: async (date) => {
       const formattedDate =
         date.$y +
         "-" +
@@ -27,7 +27,7 @@ export const useMealStore = create(
         set((state) => ({ meals: [...state.meals, response.data.data] }));
       } catch (error) {
         console.error(error);
-      } 
+      }
     },
     updateMeal: async (meal) => {
       try {

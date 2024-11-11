@@ -5,9 +5,11 @@ import Typography from "@mui/material/Typography";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
+import { useEffect, useState } from "react";
 
+//css
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-  height: 20,
+  height: 15,
   borderRadius: 10,
   [`&.${linearProgressClasses.colorPrimary}`]: {
     backgroundColor:
@@ -19,23 +21,26 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-// Inspired by the former Facebook spinners.
-
 function CalculateTotalCaloryInDay(meals) {
-  // let totalCalory = 0;
-  // meals?.forEach((meal) => {
-  //   meal?.foods.forEach((food) => {
-  //     totalCalory += food.calory;
-  //   });
-  // });
-  let totalCalory = 1000;
+  let totalCalory = 0;
+  meals.forEach((meal) => {
+    meal.foods.forEach((food) => {
+      totalCalory += food.calories;
+    });
+  });
   return totalCalory;
 }
 
 export default function CustomizedProgressBars(props) {
   let meals = props.meals;
-  let totalCalory = CalculateTotalCaloryInDay(meals);
+  let [totalCalory, setTotalCalory] = useState(
+    CalculateTotalCaloryInDay(meals)
+  );
   let targetCalory = 2500;
+
+  useEffect(() => {
+    setTotalCalory(CalculateTotalCaloryInDay(meals));
+  }, [meals]);
 
   return (
     <div>
@@ -45,7 +50,7 @@ export default function CustomizedProgressBars(props) {
           2500/{totalCalory}
         </Typography>
         <Typography variant="subtitle2" gutterBottom>
-          Target(kcal) / Current(kcal)
+          Target(cal) / Current(cal)
         </Typography>
         <BorderLinearProgress
           variant="determinate"

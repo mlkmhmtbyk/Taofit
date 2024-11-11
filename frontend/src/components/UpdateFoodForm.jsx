@@ -51,6 +51,19 @@ export default function UpdateFoodForm(props) {
       return;
     }
     const result = await updateFood(updatedFood);
+    const selectedMeal = meals.find((meal) => meal._id === updatedFood.mealId);
+    if (selectedMeal) {
+      const updatedMeal = {
+        ...selectedMeal,
+        foods: [
+          ...selectedMeal.foods.filter((food) => food._id !== updatedFood._id),
+          result.data,
+        ],
+      };
+      setMeals(
+        meals.map((meal) => (meal._id === updatedMeal._id ? updatedMeal : meal))
+      );
+    }
     if (result.success) {
       notifications.show("Food updated successfully", {
         severity: "info",
@@ -72,7 +85,6 @@ export default function UpdateFoodForm(props) {
     const mealId = updatedFood.mealId;
 
     if (success) {
-      
       const updatedMeals = meals.map((meal) => {
         if (meal._id === mealId) {
           return {

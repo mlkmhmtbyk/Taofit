@@ -9,10 +9,6 @@ import Paper from "@mui/material/Paper";
 import UpdateMealForm from "./UpdateMealForm.jsx";
 import FoodForm from "./FoodForm.jsx";
 import UpdateFoodForm from "./UpdateFoodForm.jsx";
-import { useEffect } from "react";
-import { useFoodStore } from "../store/food";
-import { useMealStore } from "../store/meal";
-import { useDateStore } from "../store/date.js";
 
 export default function BasicTable({ meal }) {
 

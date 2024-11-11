@@ -34,7 +34,6 @@ export const getMeals = async (req, res) => {
     );
 
     res.status(200).json({ success: true, data: mealsWithFoods });
-    console.log("fetchMeals yapıldı ");
   } catch (error) {
     console.log(error);
     res.status(400).json({ success: false, message: "Server error" });

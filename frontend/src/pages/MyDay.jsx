@@ -10,11 +10,11 @@ import { useDateStore } from "../store/date.js";
 import MealForm from "../components/MealForm.jsx";
 
 const MyDay = () => {
-  const { fetchMeals, meals } = useMealStore();
+  const { fetchMealsInDay, meals } = useMealStore();
   const { date } = useDateStore();
 
   useEffect(() => {
-    fetchMeals(date);
+    fetchMealsInDay(date);
   }, [date]);
 
   return (
