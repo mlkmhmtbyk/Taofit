@@ -59,7 +59,7 @@ const MyDay = () => {
           </Grid>
         </Grid>
         <Grid size={{ xs: 1.5, lg: 3 }}>
-          <PieChart />
+          <PieChart meals={meals} />
         </Grid>
         <Grid
           sx={{ display: { xs: "none", lg: "flex" } }}
