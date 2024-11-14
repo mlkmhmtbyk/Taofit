@@ -25,6 +25,12 @@ const MyDay = () => {
           size={{ lg: 0.25 }}
         ></Grid>
         <Grid sx={{ display: { xs: "block", lg: "none" } }} size={{ xs: 3 }} />
+        <Grid
+          sx={{ display: { xs: "flex", lg: "none" } }}
+          size={{ xs: 6, lg: 0 }}
+        >
+          <PieChart meals={meals} />
+        </Grid>
         <Grid size={{ xs: 6, lg: 2.5 }} display="block">
           <DatePicker />
         </Grid>
@@ -58,7 +64,10 @@ const MyDay = () => {
             <MealForm />
           </Grid>
         </Grid>
-        <Grid size={{ xs: 1.5, lg: 3 }}>
+        <Grid
+          sx={{ display: { xs: "none", lg: "flex" } }}
+          size={{ xs: 0, lg: 3 }}
+        >
           <PieChart meals={meals} />
         </Grid>
         <Grid

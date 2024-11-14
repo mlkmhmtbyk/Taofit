@@ -2,6 +2,7 @@ import * as React from "react";
 import { PieArcLabel, PieChart, PieArc } from "@mui/x-charts/PieChart";
 import Box from "@mui/material/Box";
 import { Hidden } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
 
 const data = [
   { id: 0, value: 10, label: "series X" },
@@ -10,23 +11,25 @@ const data = [
 ];
 
 export default function BasicPie() {
+  const isSmallScreen = useMediaQuery("(max-width: 1500px)");
+
   return (
     <Box>
       <PieChart
-        height={400}
+        height={isSmallScreen ? 300 : 400}
+        width={isSmallScreen ? 300 : 400}
         sx={{
           marginTop: 5,
         }}
         series={[
           {
             data,
-            innerRadius: 100,
-            outerRadius: 150,
-            //arcLabel: (d) => `${d.label} ${d.value}`,
-            cx: 200,
-            cy: 200,
+            innerRadius: isSmallScreen ? 75 : 100,
+            outerRadius: isSmallScreen ? 100 : 150,
+            cx: isSmallScreen ? 150 : 200,
+            cy: isSmallScreen ? 150 : 200,
             cornerRadius: 5,
-            paddingAngle: 4,
+            paddingAngle: isSmallScreen ? 3 : 4,
           },
         ]}
         slotProps={{
