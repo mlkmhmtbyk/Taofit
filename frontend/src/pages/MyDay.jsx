@@ -24,18 +24,32 @@ const MyDay = () => {
           sx={{ display: { xs: "none", xl: "flex" } }}
           size={{ lg: 0.25 }}
         ></Grid>
-        <Grid sx={{ display: { xs: "block", lg: "none" } }} size={{ xs: 3 }} />
         <Grid
-          sx={{ display: { xs: "flex", lg: "none" } }}
-          size={{ xs: 6, lg: 0 }}
+          sx={{ display: { xs: "block", lg: "none" } }}
+          size={{ xs: 1.5 }}
+        ></Grid>
+        <Grid
+          sx={{ display: { xs: "block", lg: "none" } }}
+          size={{ xs: 9, lg: 0 }}
         >
           <PieChart meals={meals} />
         </Grid>
+        <Grid
+          sx={{ display: { xs: "block", lg: "none" } }}
+          size={{ xs: 1.5 }}
+        ></Grid>
+        <Grid
+          sx={{ display: { xs: "block", lg: "none" } }}
+          size={{ xs: 3 }}
+        ></Grid>
         <Grid size={{ xs: 6, lg: 2.5 }} display="block">
           <DatePicker />
         </Grid>
 
-        <Grid sx={{ display: { xs: "block", lg: "none" } }} size={{ xs: 3 }} />
+        <Grid
+          sx={{ display: { xs: "block", lg: "none" } }}
+          size={{ xs: 3 }}
+        ></Grid>
         <Grid
           size={{ xs: 1.5 }}
           sx={{ display: { xs: "block", lg: "none" } }}

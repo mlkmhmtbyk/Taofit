@@ -12,12 +12,13 @@ const data = [
 
 export default function BasicPie() {
   const isSmallScreen = useMediaQuery("(max-width: 1500px)");
+  const ismobile = useMediaQuery("(max-width: 1200px)");
 
   return (
-    <Box>
+    <Box display="flex" justifyContent="center" alignItems="center">
       <PieChart
-        height={isSmallScreen ? 300 : 400}
-        width={isSmallScreen ? 300 : 400}
+        height={ismobile ? 300 : isSmallScreen ? 300 : 400}
+        width={ismobile ? 300 : isSmallScreen ? 300 : 400}
         sx={{
           marginTop: 5,
         }}
@@ -26,8 +27,8 @@ export default function BasicPie() {
             data,
             innerRadius: isSmallScreen ? 75 : 100,
             outerRadius: isSmallScreen ? 100 : 150,
-            cx: isSmallScreen ? 150 : 200,
-            cy: isSmallScreen ? 150 : 200,
+            cx: ismobile ? 140 : isSmallScreen ? 150 : 200,
+            cy: ismobile ? 160 : isSmallScreen ? 150 : 200,
             cornerRadius: 5,
             paddingAngle: isSmallScreen ? 3 : 4,
           },
