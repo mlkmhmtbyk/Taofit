@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import User from "../models/user.model.js";
+import generateToken from "../utils/generateToken.js";
 
 //desc Register user
 //route POST /
@@ -29,28 +30,18 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-  if (!email || !password) {
-    return res
-      .status(400)
-      .json({ success: false, message: "All fields are required" });
-  }
+  const user = await User.findOne({ email });
 
-  try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid email or password" });
-    }
-    const isMatch = await user.matchPassword(password);
-    if (!isMatch) {
-      return res
-        .status(400)
-        .json({ success: false, message: "Invalid email or password" });
-    }
-    res.status(200).json({ success: true, data: user });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ success: false, message: "Server error" });
+  if (user && (await user.matchPassword(password))) {
+    generateToken(res, user._id);
+
+    res.status(200).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+    });
+  } else {
+    res.status(401);
+    throw new Error("Invalid email or password");
   }
 };
