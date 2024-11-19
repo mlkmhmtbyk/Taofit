@@ -1,15 +1,11 @@
 import * as React from "react";
-import { PieArcLabel, PieChart, PieArc } from "@mui/x-charts/PieChart";
+import { PieChart } from "@mui/x-charts/PieChart";
 import Box from "@mui/material/Box";
-import { Hidden, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { useMediaQuery } from "@mui/material";
 import { useState, useEffect } from "react";
-import { useDrawingArea } from "@mui/x-charts/hooks";
-// const data = [
-//   { id: 0, value: 10, label: "series X" },
-//   { id: 1, value: 15, label: "series B" },
-//   { id: 2, value: 20, label: "series C" },
-// ];
+import Grid from "@mui/material/Grid2";
+
 function CalculateTotalProtein(meals) {
   let totalProtein = 0;
   meals.forEach((meal) => {
@@ -39,10 +35,7 @@ function CalculateTotalFat(meals) {
   });
   return totalFat;
 }
-function PieCenterLabel({ children }) {
-  const { width, height, left, top } = useDrawingArea();
-  return <Typography>{children}</Typography>;
-}
+
 export default function BasicPie(props) {
   const meals = props.meals;
   const [protein, setProtein] = useState(0);
@@ -50,7 +43,7 @@ export default function BasicPie(props) {
   const [carbs, setCarbs] = useState(0);
 
   const data = [
-    { id: 0, label: "Carbonhdrat", value: carbs * 4 },
+    { id: 0, label: "Carbohydrate", value: carbs * 4 },
     { id: 1, label: "Fat", value: fat * 9 },
     { id: 2, label: "Protein", value: protein * 4 },
   ];
@@ -66,33 +59,55 @@ export default function BasicPie(props) {
 
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
-      <PieChart
-        height={ismobile ? 300 : isSmallScreen ? 300 : 400}
-        width={ismobile ? 300 : isSmallScreen ? 300 : 400}
-        sx={{
-          marginTop: 5,
-        }}
-        series={[
-          {
-            data,
-            innerRadius: isSmallScreen ? 75 : 100,
-            outerRadius: isSmallScreen ? 100 : 150,
-            cx: ismobile ? 140 : isSmallScreen ? 150 : 200,
-            cy: ismobile ? 160 : isSmallScreen ? 150 : 200,
-            cornerRadius: 5,
-            paddingAngle: isSmallScreen ? 3 : 4,
-          },
-        ]}
-        slotProps={{
-          legend: {
-            direction: "row",
-            position: { vertical: "top", horizontal: "center" },
-            padding: 0,
-          },
-        }}
-      >
-        <PieCenterLabel>Nutrition Rate</PieCenterLabel>
-      </PieChart>
+      <Grid container direction="column" alignItems="center">
+        <Grid>
+          <Typography
+            variant="h6"
+            align="center"
+            display={"block"}
+            marginBottom={0}
+          >
+            Nutrition Breakdown
+          </Typography>
+        </Grid>
+        <Grid>
+          <PieChart
+            height={ismobile ? 300 : isSmallScreen ? 300 : 400}
+            width={ismobile ? 300 : isSmallScreen ? 300 : 400}
+            sx={{
+              marginTop: 5,
+            }}
+            series={[
+              {
+                data,
+                innerRadius: isSmallScreen ? 75 : 100,
+                outerRadius: isSmallScreen ? 100 : 150,
+                cx: ismobile ? 140 : isSmallScreen ? 150 : 200,
+                cy: ismobile ? 160 : isSmallScreen ? 150 : 200,
+                cornerRadius: 5,
+                paddingAngle: isSmallScreen ? 3 : 4,
+                valueFormatter: (v, { dataIndex }) => {
+                  const total = data.reduce((acc, curr) => acc + curr.value, 0);
+                  return `${((v.value / total) * 100).toFixed(2)}%`;
+                },
+              },
+            ]}
+            slotProps={{
+              legend: {
+                direction: "row",
+                position: { vertical: "top", horizontal: "middle" },
+                padding: 0,
+              },
+              tooltip: {
+                formatter: (value, name, props) => {
+                  const percentage = (value / props.total) * 100;
+                  return `${percentage.toFixed(2)}%`;
+                },
+              },
+            }}
+          ></PieChart>
+        </Grid>
+      </Grid>
     </Box>
   );
 }
