@@ -7,12 +7,13 @@ import {
   updateMeal,
   deleteMeal,
 } from "../controllers/meal.controller.js";
+import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
 router.post("/", createMeal);
 
-router.get("/getMealsByDate", getMealsByDate);
+router.get("/getMealsByDate", protect, getMealsByDate);
 
 router.get("/:id", getMealById);
 

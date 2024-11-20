@@ -1,7 +1,6 @@
 import Meal from "../models/meal.model.js";
 import Food from "../models/food.model.js";
 import mongoose from "mongoose";
-import { protect } from "../middleware/authMiddleware.js";
 
 export const createMeal = async (req, res) => {
   const meal = req.body;
