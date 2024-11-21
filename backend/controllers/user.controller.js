@@ -1,7 +1,6 @@
 import User from "../models/user.model.js";
 import generateToken from "../utils/generateToken.js";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
 
 //desc Register user
 //route POST /
@@ -43,15 +42,15 @@ export const loginUser = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      res.status(401).json({ error: "Kullanıcı bulunamadı" });
+      res.status(401).json({ error: "User not found!" });
     } else if (!(await user.matchPassword(password))) {
-      res.status(401).json({ error: "Şifre yanlış" });
+      res.status(401).json({ error: "Wrong password" });
     } else {
       await generateToken(res, user._id);
-      res.status(200).json({ success, data: user });
+      res.status(200).json({ success: true, data: user });
     }
   } catch (error) {
-    res.status(500).json({ error: "Giriş başarısız" });
+    res.status(500).json({ error: "Server error!" });
   }
 };
 
