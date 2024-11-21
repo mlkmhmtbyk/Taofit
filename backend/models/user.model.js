@@ -16,6 +16,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    targetCalory: {
+      type: Number,
+      required: false,
+      default: 2500
+    },
   },
   {
     timestamps: true,
