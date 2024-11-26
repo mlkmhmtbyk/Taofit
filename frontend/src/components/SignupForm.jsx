@@ -1,13 +1,20 @@
 import { Card, TextField, Button, Typography, Link } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
-function LoginForm() {
+function SignupForm() {
   return (
     <Card sx={{ maxWidth: 400, margin: "auto", padding: 10 }}>
       <Typography variant="h4" sx={{ marginBottom: 3 }}>
-        Login
+        Sign Up
       </Typography>
-      <TextField id="name" label="Name" type="name" margin="normal" autoComplete="UserName" fullWidth />
+      <TextField
+        id="name"
+        label="Name"
+        type="name"
+        margin="normal"
+        autoComplete="UserName"
+        fullWidth
+      />
       <TextField
         id="email"
         label="Email Address"
@@ -46,4 +53,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default SignupForm;
