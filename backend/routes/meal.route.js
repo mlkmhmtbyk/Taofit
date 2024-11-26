@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.post("/", createMeal);
 
-router.get("/getMealsByDate", protect, getMealsByDate);
+router.get("/getMealsByDate", getMealsByDate);
 
 router.get("/:id", getMealById);
 
