@@ -8,7 +8,6 @@ import PieChart from "../components/PieChart.jsx";
 import { useMealStore } from "../store/meal.js";
 import { useDateStore } from "../store/date.js";
 import MealForm from "../components/MealForm.jsx";
-import { Typography } from "@mui/material";
 
 const MyDay = () => {
   const { fetchMealsInDay, meals } = useMealStore();
