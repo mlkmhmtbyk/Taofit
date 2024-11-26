@@ -5,9 +5,8 @@ function LoginForm() {
   return (
     <Card sx={{ maxWidth: 400, margin: "auto", padding: 10 }}>
       <Typography variant="h4" sx={{ marginBottom: 3 }}>
-        Login
+        Log in
       </Typography>
-      <TextField id="name" label="Name" type="name" margin="normal" autoComplete="UserName" fullWidth />
       <TextField
         id="email"
         label="Email Address"
@@ -30,15 +29,15 @@ function LoginForm() {
             color="primary"
             onClick={() => console.log("Login button clicked")}
           >
-            Login
+            Log in
           </Button>
         </Grid>
         <Grid>
           <Link
-            href="/sign-up"
+            href="/signup"
             sx={{ fontSize: 12, display: "block", marginTop: 1 }}
           >
-            Don't have an account? <br /> Sign Up
+            Don't have an account? <br /> Sign up
           </Link>
         </Grid>
       </Grid>

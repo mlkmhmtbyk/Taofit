@@ -5,7 +5,7 @@ function SignupForm() {
   return (
     <Card sx={{ maxWidth: 400, margin: "auto", padding: 10 }}>
       <Typography variant="h4" sx={{ marginBottom: 3 }}>
-        Sign Up
+        Sign up
       </Typography>
       <TextField
         id="name"
@@ -37,15 +37,15 @@ function SignupForm() {
             color="primary"
             onClick={() => console.log("Login button clicked")}
           >
-            Login
+            Sign up
           </Button>
         </Grid>
         <Grid>
           <Link
-            href="/sign-up"
+            href="/login"
             sx={{ fontSize: 12, display: "block", marginTop: 1 }}
           >
-            Don't have an account? <br /> Sign Up
+            Already have an account <br /> Log in
           </Link>
         </Grid>
       </Grid>
