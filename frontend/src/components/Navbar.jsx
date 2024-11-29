@@ -13,6 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useUserStore } from "../store/user.js";
+import { useNavigate } from "react-router-dom";
 
 const pages = ["MyDay", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -20,6 +21,8 @@ const settings = ["Profile", "Account", "Dashboard", "Logout"];
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const navigate = useNavigate();
 
   const { logout } = useUserStore();
 
@@ -40,7 +43,7 @@ function ResponsiveAppBar() {
 
   const handleLogout = () => {
     logout();
-    console.log("Logout successful");
+    navigate("/login");
   };
 
   return (
@@ -115,7 +118,6 @@ function ResponsiveAppBar() {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
