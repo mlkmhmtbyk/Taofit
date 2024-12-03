@@ -1,7 +1,24 @@
+import { useState } from "react";
 import { Card, TextField, Button, Typography, Link } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import { useUserStore } from "../store/user.js";
+import { useNavigate } from "react-router-dom";
+import MyDay from "../pages/MyDay.jsx";
 
 function SignupForm() {
+  const { signup } = useUserStore();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleSignup = async () => {
+    const credentials = { name, email, password };
+    await signup(credentials);
+    console.log("Signup successful:", credentials);
+    navigate("/myDay");
+  };
+
   return (
     <Card sx={{ maxWidth: 400, margin: "auto", padding: 10 }}>
       <Typography variant="h4" sx={{ marginBottom: 3 }}>
@@ -12,8 +29,10 @@ function SignupForm() {
         label="Name"
         type="name"
         margin="normal"
-        autoComplete="UserName"
+        autoComplete="name"
         fullWidth
+        value={name}
+        onChange={(e) => setName(e.target.value)}
       />
       <TextField
         id="email"
@@ -22,6 +41,8 @@ function SignupForm() {
         margin="normal"
         autoComplete="email"
         fullWidth
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
       />
       <TextField
         id="password"
@@ -29,13 +50,16 @@ function SignupForm() {
         type="password"
         margin="normal"
         fullWidth
+        autoComplete="new-password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
       />
       <Grid container justifyContent="space-between">
         <Grid>
           <Button
             variant="contained"
             color="primary"
-            onClick={() => console.log("Login button clicked")}
+            onClick={() => handleSignup()}
           >
             Sign up
           </Button>

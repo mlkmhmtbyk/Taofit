@@ -12,7 +12,7 @@ export default function Login() {
       style={{ minHeight: "20vh" }}
       sx={{ marginTop: "100px" }}
     >
-      <Grid item xs={3}>
+      <Grid>
         <LoginForm />
       </Grid>
     </Grid>
