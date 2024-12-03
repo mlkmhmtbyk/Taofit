@@ -3,13 +3,14 @@ import Navbar from "./components/NavBar.jsx";
 import MyDay from "./pages/MyDay.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
+import HomePage from "./pages/HomePage.jsx";
 
 function App() {
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path="/" element={<MyDay />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/myDay" element={<MyDay />} />
         <Route path="/login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
