@@ -15,7 +15,7 @@ function LoginForm() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1000); // 2 saniye sonra loading'i false yap
+    }, 500); // 2 saniye sonra loading'i false yap
     return () => clearTimeout(timer);
   }, []);
 
