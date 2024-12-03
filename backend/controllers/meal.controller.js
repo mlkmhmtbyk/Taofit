@@ -1,9 +1,17 @@
 import Meal from "../models/meal.model.js";
 import Food from "../models/food.model.js";
 import mongoose from "mongoose";
+import { getUserIdFromToken } from "../utils/UserHelper.js";
 
 export const createMeal = async (req, res) => {
   const meal = req.body;
+  const userId = await getUserIdFromToken(req, res);
+
+  if (!userId) {
+    return res.status(401).json({ success: false, message: "Unauthorized" });
+  }
+
+  meal.userId = userId;
 
   if (!meal.name) {
     return res
@@ -43,6 +51,7 @@ export const getMeals = async (req, res) => {
 export const getMealsByDate = async (req, res) => {
   const date = req.query.date;
   const dateWithTime = new Date(`${date}T12:00:00.000Z`);
+  const userId = await getUserIdFromToken(req, res);
 
   const startDate = new Date(dateWithTime);
   startDate.setHours(0, 0, 0, 0);
@@ -51,7 +60,11 @@ export const getMealsByDate = async (req, res) => {
   endDate.setHours(23, 59, 59, 999);
 
   try {
-    const meals = await Meal.find({ date: { $gte: startDate, $lte: endDate } });
+    const meals = await Meal.find({
+      userId: userId,
+      date: { $gte: startDate, $lte: endDate },
+    });
+
     const mealsWithFoods = await Promise.all(
       meals.map(async (meal) => {
         const foods = await Food.find({ mealId: meal._id });
@@ -83,13 +96,23 @@ export const getMealById = async (req, res) => {
 export const updateMeal = async (req, res) => {
   const { id } = req.params;
   const meal = req.body;
+  const userId = await getUserIdFromToken(req, res);
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ success: false, message: "Invalid meal id" });
   }
 
   try {
-    const updatedMeal = await Meal.findByIdAndUpdate(id, meal, { new: true });
+    const updatedMeal = await Meal.findOneAndUpdate(
+      { _id: id, userId: userId },
+      meal,
+      { new: true }
+    );
+    if (!updatedMeal) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Meal not found" });
+    }
     res.status(200).json({ success: true, data: updatedMeal });
   } catch (error) {
     console.log(error);
@@ -99,13 +122,22 @@ export const updateMeal = async (req, res) => {
 
 export const deleteMeal = async (req, res) => {
   const { id } = req.params;
+  const userId = await getUserIdFromToken(req, res);
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ success: false, message: "Invalid meal id" });
   }
 
   try {
-    await Meal.findByIdAndDelete(id);
+    const deletedMeal = await Meal.findOneAndDelete({
+      _id: id,
+      userId: userId,
+    });
+    if (!deletedMeal) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Meal not found" });
+    }
     res
       .status(200)
       .json({ success: true, message: "Meal deleted successfully" });
